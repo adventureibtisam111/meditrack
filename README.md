@@ -33,6 +33,9 @@ Real-time overview of hospital statistics including:
 ## 📷 PREVIEW
 <img width="1344" height="646" alt="image" src="https://github.com/user-attachments/assets/bba54c60-8c32-4329-99be-9502e5ae1a2e" />
 
+## 🌐 Live Demo
+https://your-meditrack-app.com
+
 
 
 ## 📌 Future Improvements

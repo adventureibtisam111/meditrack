@@ -1,34 +1,44 @@
-🏥 Meditrack – Healthcare Management System
+# 🏥 MediTrack – Healthcare Management System
 
-Meditrack is a full-stack healthcare management system designed to simplify the management of patients, doctors, appointments, and medication records within a centralized platform.
+MediTrack is a role-based hospital management system built with Laravel.
 
-It provides a structured workflow for healthcare data and an admin dashboard for system overview.
+It helps clinics manage:
+- 👨‍⚕️ Doctors
+- 🧑‍🦽 Patients
+- 📅 Appointments
+- 💊 Prescriptions
+- 🧪 Lab Tests
 
-✨ KEY FEATURES
+## 🚀 Features
+- Secure authentication system (login/register/logout)
+- Role-based dashboard (admin-ready)
+- Full CRUD for hospital operations
+- Search functionality across modules
+- Clean Bootstrap UI
 
-👨‍⚕️ Doctor management system
+## 📊 Dashboard
+Real-time overview of hospital statistics including:
+- Total doctors
+- Total patients
+- Appointments
+- Prescriptions
+- Lab tests
 
-🧑‍🤝‍🧑 Patient records management
+## 🛠 Tech Stack
+- Laravel
+- MySQL
+- Bootstrap 5
+- Blade templates
 
-📅 Appointment scheduling system
-
-💊 Medication tracking and records
-
-📊 Dashboard with system overview and statistics
-
-🛠️ TECH STACK
-
-Laravel
-
-PHP
-
-MySQL
-
-HTML / CSS / JavaScript
-
-
-📷 PREVIEW
+## 📷 PREVIEW
 <img width="1344" height="646" alt="image" src="https://github.com/user-attachments/assets/bba54c60-8c32-4329-99be-9502e5ae1a2e" />
 
+
+
+## 📌 Future Improvements
+- Patient history tracking
+- Role-based access (Admin / Doctor / Receptionist)
+- Email notifications
+- API version
 
 This project is for learning and portfolio purposes.

@@ -105,7 +105,16 @@ Perfect for learning how to build production-like applications!
 
 ## 📷 Preview
 
-<img width="1344" height="646" alt="image" src="https://github.com/user-attachments/assets/bba54c60-8c32-4329-99be-9502e5ae1a2e" />
+<img width="1355" height="583" alt="image" src="https://github.com/user-attachments/assets/3ea35b20-bb2b-4b8f-b8e1-e142042dd827" />
+<img width="1355" height="646" alt="image" src="https://github.com/user-attachments/assets/e157112e-7f81-4e76-8982-015b7d2fa579" />
+<img width="1355" height="643" alt="image" src="https://github.com/user-attachments/assets/64ff3a9c-228b-4a2e-9d92-097baa40e906" />
+<img width="1358" height="617" alt="image" src="https://github.com/user-attachments/assets/be378bb4-3fbd-40e3-9e9a-4f3b4c0ebf17" />
+<img width="1350" height="638" alt="image" src="https://github.com/user-attachments/assets/45bfd219-a128-4027-9c54-c0e504a0882e" />
+<img width="1358" height="591" alt="image" src="https://github.com/user-attachments/assets/bd0264d7-adb1-4f2c-9625-f63ea24c8107" />
+
+
+
+
 
 ---
 

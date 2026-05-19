@@ -1,22 +1,33 @@
 🏥 Meditrack – Healthcare Management System
-📌 About
 
-Meditrack is a web-based healthcare management system designed to manage doctors, patients, appointments, and medication records in a centralized platform with an admin dashboard for overview and control.
+Meditrack is a full-stack healthcare management system designed to simplify the management of patients, doctors, appointments, and medication records within a centralized platform.
 
-✨ Features
-Manage patient records
-Manage doctor profiles
-Schedule and track appointments
-Medication management system
-Dashboard for overall system overview
+It provides a structured workflow for healthcare data and an admin dashboard for system overview.
 
-🛠️ Tech Stack
+✨ KEY FEATURES
+
+👨‍⚕️ Doctor management system
+
+🧑‍🤝‍🧑 Patient records management
+
+📅 Appointment scheduling system
+
+💊 Medication tracking and records
+
+📊 Dashboard with system overview and statistics
+
+🛠️ TECH STACK
+
 Laravel
+
 PHP
+
 MySQL
+
 HTML / CSS / JavaScript
 
-📷 Preview
+
+📷 PREVIEW
 <img width="1344" height="646" alt="image" src="https://github.com/user-attachments/assets/bba54c60-8c32-4329-99be-9502e5ae1a2e" />
 
 

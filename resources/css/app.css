@@ -1,11 +1,28 @@
-@import 'tailwindcss';
+.stat-card {
+    transition: 0.2s ease-in-out;
+    border-radius: 16px;
+}
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+.stat-card:hover {
+    transform: translateY(-4px);
+}
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.hover-row {
+    transition: 0.2s;
+}
+
+.hover-row:hover {
+    background: #f8fafc;
+    padding-left: 6px;
+    border-radius: 6px;
 }

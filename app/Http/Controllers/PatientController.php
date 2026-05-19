@@ -8,56 +8,90 @@ use Illuminate\Http\Request;
 class PatientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of patients
      */
     public function index(Request $request)
     {
         $search = $request->input('search');
 
         $patients = Patient::when($search, function ($query, $search) {
-            return $query->where('name', 'like', "%$search%")
-                         ->orWhere('phone', 'like', "%$search%");
+            return $query->where('name', 'like', "%{$search}%")
+                         ->orWhere('illness', 'like', "%{$search}%")
+                         ->orWhere('address', 'like', "%{$search}%");
         })->get();
 
         return view('patients.index', compact('patients', 'search'));
     }
 
-
+    /**
+     * Show create form
+     */
     public function create()
     {
         return view('patients.create');
     }
 
+    /**
+     * Store new patient
+     */
     public function store(Request $request)
     {
-        Patient::create($request -> all());
-        return redirect() -> route('patients.index');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer',
+            'illness' => 'required|string|max:255',
+            'address' => 'nullable|string',
+        ]);
+
+        Patient::create([
+            'name' => $request->name,
+            'age' => $request->age,
+            'illness' => $request->illness,
+            'address' => $request->address,
+        ]);
+
+        return redirect()->route('patients.index')
+                         ->with('success', 'Patient added successfully!');
     }
 
     /**
-     * Display the specified resource.
+     * Show edit form
      */
     public function edit(Patient $patient)
     {
         return view('patients.edit', compact('patient'));
     }
 
-
     /**
-     * Update the specified resource in storage.
+     * Update patient
      */
     public function update(Request $request, Patient $patient)
     {
-        $patient -> update($request -> all());
-        return redirect() -> route('patients.index');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer',
+            'illness' => 'required|string|max:255',
+            'address' => 'nullable|string',
+        ]);
+
+        $patient->update([
+            'name' => $request->name,
+            'age' => $request->age,
+            'illness' => $request->illness,
+            'address' => $request->address,
+        ]);
+
+        return redirect()->route('patients.index')
+                         ->with('success', 'Patient updated successfully!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete patient
      */
     public function destroy(Patient $patient)
     {
-        $patient -> delete();
-        return back();
+        $patient->delete();
+
+        return back()->with('success', 'Patient deleted successfully!');
     }
 }

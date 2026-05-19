@@ -1,34 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PatientController;
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\PrescriptionController;
-use App\Models\Doctor;
-use App\Models\Patient;
-use App\Models\Appointment;
-use App\Models\Prescription;
+use App\Http\Controllers\{
+    AuthController,
+    DoctorController,
+    PatientController,
+    AppointmentController,
+    PrescriptionController,
+    LabController,
+    DashboardController
+};
 
 /*
 |--------------------------------------------------------------------------
-| HOME PAGE (PUBLIC)
+| PUBLIC
 |--------------------------------------------------------------------------
 */
 
 Route::get('/', function () {
-    return view('home', [
-        'doctors' => Doctor::count(),
-        'patients' => Patient::count(),
-        'appointments' => Appointment::count(),
-        'prescriptions' => Prescription::count(),
-    ]);
+    return redirect('/dashboard');
 });
 
 /*
 |--------------------------------------------------------------------------
-| AUTH ROUTES (PUBLIC / GUEST ONLY)
+| AUTH
 |--------------------------------------------------------------------------
 */
 
@@ -39,37 +34,31 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
-
 });
 
-/*
-|--------------------------------------------------------------------------
-| LOGOUT (ONLY FOR LOGGED IN USERS)
-|--------------------------------------------------------------------------
-*/
-
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| HOSPITAL SYSTEM (LOGIN REQUIRED)
+| AUTHENTICATED AREA
 |--------------------------------------------------------------------------
 */
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('home', [
-            'doctors' => Doctor::count(),
-            'patients' => Patient::count(),
-            'appointments' => Appointment::count(),
-            'prescriptions' => Prescription::count(),
-        ]);
-    });
+    // DASHBOARD
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
+    // LIVE STATS API
+    Route::get('/dashboard/live-stats', [DashboardController::class, 'liveStats']);
+
+    // RESOURCES
     Route::resource('doctors', DoctorController::class);
     Route::resource('patients', PatientController::class);
     Route::resource('appointments', AppointmentController::class);
     Route::resource('prescriptions', PrescriptionController::class);
-
+    Route::resource('labs', LabController::class);
 });

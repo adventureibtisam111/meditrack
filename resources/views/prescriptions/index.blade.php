@@ -6,8 +6,8 @@
 
 <a href="/prescriptions/create" class="btn btn-success mb-3">+ Add Prescription</a>
 
-<table class="table table-bordered">
-    <thead>
+<table class="table table-bordered table-hover">
+    <thead class="table-primary">
         <tr>
             <th>Doctor</th>
             <th>Patient</th>
@@ -17,14 +17,18 @@
     </thead>
 
     <tbody>
-        @foreach($prescriptions as $p)
+        @forelse($prescriptions as $p)
         <tr>
-            <td>{{ $p->doctor->name }}</td>
-            <td>{{ $p->patient->name }}</td>
+            <td>{{ $p->doctor->name ?? 'N/A' }}</td>
+            <td>{{ $p->patient->name ?? 'N/A' }}</td>
             <td>{{ $p->medicine_name }}</td>
             <td>{{ $p->dosage }}</td>
         </tr>
-        @endforeach
+        @empty
+        <tr>
+            <td colspan="4" class="text-center text-muted">No prescriptions found</td>
+        </tr>
+        @endforelse
     </tbody>
 </table>
 

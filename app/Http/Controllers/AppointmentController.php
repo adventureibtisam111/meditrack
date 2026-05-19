@@ -9,40 +9,48 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public function index(Request $request)
-    {
-        $search = $request->input('search');
+  public function index(Request $request)
+{
+    $search = $request->input('search');
+    $status = $request->input('status');
 
-        $appointments = Appointment::with(['doctor', 'patient'])
-            ->when($search, function ($query, $search) {
-                return $query->whereHas('patient', function ($q) use ($search) {
-                        $q->where('name', 'like', "%$search%");
-                    })
-                    ->orWhereHas('doctor', function ($q) use ($search) {
-                        $q->where('name', 'like', "%$search%");
-                    });
+    $appointments = Appointment::with(['doctor', 'patient'])
+        ->when($search, function ($query, $search) {
+            $query->whereHas('patient', function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%");
             })
-            ->get();
+            ->orWhereHas('doctor', function ($q) use ($search) {
+                $q->where('name', 'like', "%$search%");
+            });
+        })
+        ->when($status, function ($query, $status) {
+            $query->where('status', $status);
+        })
+        ->latest()
+        ->get();
 
-        return view('appointments.index', compact('appointments', 'search'));
-    }
+    return view('appointments.index', compact('appointments', 'search'));
+}
 
     public function create()
     {
-        $doctors = Doctor::all();
-        $patients = Patient::all();
-
-        return view('appointments.create', compact('doctors', 'patients'));
+        return view('appointments.create', [
+            'doctors' => Doctor::all(),
+            'patients' => Patient::all(),
+        ]);
     }
 
     public function store(Request $request)
     {
-        Appointment::create([
-            'doctor_id' => $request->doctor_id,
-            'patient_id' => $request->patient_id,
-            'appointment_date' => $request->appointment_date,
-            'status' => $request->status,
+        // ✅ VALIDATION (VERY IMPORTANT FOR PORTFOLIO QUALITY)
+        $validated = $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'patient_id' => 'required|exists:patients,id',
+            'appointment_date' => 'required|date',
+            'status' => 'required|in:pending,approved,completed,cancelled',
         ]);
+
+        Appointment::create($validated);
 
         return redirect()->route('appointments.index')
             ->with('success', 'Appointment created successfully');
@@ -50,20 +58,23 @@ class AppointmentController extends Controller
 
     public function edit(Appointment $appointment)
     {
-        $doctors = Doctor::all();
-        $patients = Patient::all();
-
-        return view('appointments.edit', compact('appointment', 'doctors', 'patients'));
+        return view('appointments.edit', [
+            'appointment' => $appointment,
+            'doctors' => Doctor::all(),
+            'patients' => Patient::all(),
+        ]);
     }
 
     public function update(Request $request, Appointment $appointment)
     {
-        $appointment->update([
-            'doctor_id' => $request->doctor_id,
-            'patient_id' => $request->patient_id,
-            'appointment_date' => $request->appointment_date,
-            'status' => $request->status,
+        $validated = $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'patient_id' => 'required|exists:patients,id',
+            'appointment_date' => 'required|date',
+            'status' => 'required|in:pending,approved,completed,cancelled',
         ]);
+
+        $appointment->update($validated);
 
         return redirect()->route('appointments.index')
             ->with('success', 'Appointment updated successfully');

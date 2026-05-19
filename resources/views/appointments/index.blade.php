@@ -4,32 +4,38 @@
 
 <h2>📅 Appointments List</h2>
 
-<!-- 🔍 SEARCH -->
-<form method="GET" action="{{ route('appointments.index') }}" class="mb-3 d-flex">
+<!-- 🔍 SEARCH + FILTER -->
+<form method="GET" action="{{ route('appointments.index') }}" class="mb-3 d-flex gap-2">
+
     <input 
         type="text" 
         name="search" 
-        value="{{ $search ?? '' }}" 
-        class="form-control me-2" 
-        placeholder="Search appointments..."
+        value="{{ request('search') }}" 
+        class="form-control" 
+        placeholder="Search by patient or doctor..."
     >
 
-    <button class="btn btn-primary">Search</button>
+    <select name="status" class="form-control">
+        <option value="">All Status</option>
+        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+        <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+        <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+        <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+    </select>
+
+    <button class="btn btn-primary">Filter</button>
 </form>
 
-<!-- ➕ ADD BUTTON -->
 <a href="/appointments/create" class="btn btn-success mb-3">+ Add Appointment</a>
 
-<!-- 📢 SUCCESS MESSAGE -->
 @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
 @endif
 
-<!-- 📋 TABLE -->
-<table class="table table-bordered">
-    <thead>
+<table class="table table-bordered table-hover">
+    <thead class="table-primary">
         <tr>
             <th>Patient</th>
             <th>Doctor</th>
@@ -45,17 +51,19 @@
             <td>{{ $appointment->patient->name ?? 'N/A' }}</td>
             <td>{{ $appointment->doctor->name ?? 'N/A' }}</td>
             <td>{{ $appointment->appointment_date }}</td>
-            <td>{{ $appointment->status }}</td>
 
             <td>
-                <a href="/appointments/{{ $appointment->id }}/edit" class="btn btn-warning btn-sm">
-                    Edit
-                </a>
+                <span class="badge bg-warning text-dark">
+                    {{ $appointment->status }}
+                </span>
+            </td>
 
-                <form action="/appointments/{{ $appointment->id }}" method="POST" style="display:inline;">
+            <td>
+                <a href="/appointments/{{ $appointment->id }}/edit" class="btn btn-warning btn-sm">Edit</a>
+
+                <form action="/appointments/{{ $appointment->id }}" method="POST" class="d-inline">
                     @csrf
                     @method('DELETE')
-
                     <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this appointment?')">
                         Delete
                     </button>
@@ -64,7 +72,9 @@
         </tr>
         @empty
         <tr>
-            <td colspan="5" class="text-center">No appointments found</td>
+            <td colspan="5" class="text-center text-muted">
+                No appointments found
+            </td>
         </tr>
         @endforelse
     </tbody>

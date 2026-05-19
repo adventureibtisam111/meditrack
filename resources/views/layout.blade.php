@@ -1,69 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MediTrack</title>
+    <meta charset="UTF-8">
+    <title>MediTrack SaaS</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            background: #f4f6f9;
+            background: #f4f7fb;
         }
 
-        .navbar {
-            padding: 10px 20px;
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            background: #0f172a;
+            color: white;
+            padding: 20px;
         }
 
-        .nav-link {
-            color: white !important;
-            margin-right: 10px;
+        .sidebar h2 {
+            font-size: 18px;
+            margin-bottom: 30px;
         }
 
-        .nav-link:hover {
-            text-decoration: underline;
+        .nav-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            margin-bottom: 8px;
+        }
+
+        .nav-item:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 260px;
+            padding: 25px;
+        }
+
+        /* CARDS */
+        .stat-card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>🏥 MediTrack</h2>
 
-    <a class="navbar-brand fw-bold" href="/">🏥 MediTrack</a>
+    <a href="/dashboard" class="nav-item">📊 Dashboard</a>
+    <a href="/doctors" class="nav-item">👨‍⚕️ Doctors</a>
+    <a href="/patients" class="nav-item">🧑‍🦽 Patients</a>
+    <a href="/appointments" class="nav-item">📅 Appointments</a>
+    <a href="/labs" class="nav-item">🧪 Labs</a>
+    <a href="/prescriptions" class="nav-item">💊 Prescriptions</a>
+</div>
 
-    <div class="ms-auto d-flex align-items-center gap-2">
+<!-- MAIN CONTENT -->
+<div class="main">
 
-        @guest
-            <a href="/login" class="btn btn-light btn-sm px-3">
-                🔐 Login
-            </a>
-
-            <a href="/register" class="btn btn-outline-light btn-sm px-3">
-                📝 Register
-            </a>
-        @endguest
-
-        @auth
-            <span class="text-white fw-semibold me-2">
-                👤 {{ auth()->user()->name }}
-            </span>
-
-            <form method="POST" action="/logout" class="m-0">
-                @csrf
-                <button class="btn btn-danger btn-sm px-3">
-                    🚪 Logout
-                </button>
-            </form>
-        @endauth
-
-    </div>
-
-</nav>
-
-<!-- PAGE CONTENT -->
-<div class="container mt-4">
     @yield('content')
+
 </div>
 
 </body>

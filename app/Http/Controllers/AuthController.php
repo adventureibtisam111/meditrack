@@ -72,5 +72,12 @@ public function logout() {
     request() -> session() -> regenerateToken();
 
     return redirect('/login');
+
+    User::create([
+    'name' => $request->name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'role' => 'receptionist', // default role
+]);
 }
      }
